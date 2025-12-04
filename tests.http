@@ -1,0 +1,137 @@
+@baseUrl = http://localhost:3000
+@authToken = your_auth_token_here
+@amroId = 692f96cfc2b3ae21d828f59d
+@aliId = 692f96fec2b3ae21d828f5a3
+
+### ------------------- AUTH ROUTES -------------------
+
+### Signup
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+    "email": "abas@gmail.com",
+    "name": "Abas",
+    "password": "password123"
+}
+
+### Verify Email
+POST {{baseUrl}}/verify-email
+Content-Type: application/json
+
+{
+    "verificationToken": "15761881"
+}
+
+### Signin
+POST {{baseUrl}}/signin
+Content-Type: application/json
+
+{
+    "email": "ali@gmail.com",
+    "password": "password123"
+}
+
+### Logout
+POST {{baseUrl}}/logout
+Content-Type: application/json
+
+### Check Auth
+GET {{baseUrl}}/check-auth
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get All Users
+GET {{baseUrl}}/getall
+Content-Type: application/json
+
+### Verify Email (Manual Token Required)
+POST {{baseUrl}}/verify-email
+Content-Type: application/json
+
+{
+    "verificationToken": "123456"
+}
+
+### Forgot Password
+POST {{baseUrl}}/forgot-password
+Content-Type: application/json
+
+{
+    "email": "ali@gmail.com"
+}
+
+### Reset Password (Manual Token Required)
+POST {{baseUrl}}/reset-password/5f01dc866e207ac65b98c6f2811a927dd44117d4f333c65990dfa97f44314ef8
+Content-Type: application/json
+
+{
+    "password": "password123"
+}
+
+### Onboarding
+POST {{baseUrl}}/onboarding
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+{
+    "profilePic": "https://avatar.iran.liara.run/public/1.png",
+    "bio": "Hello world",
+    "location": "Earth",
+    "gender": "male"
+}
+
+### Delete User (Manual ID Required)
+DELETE {{baseUrl}}/delete/user_id_here
+Content-Type: application/json
+
+
+### ------------------- USER ROUTES -------------------
+
+### Get Suggested Friends
+GET {{baseUrl}}/user/suggested
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get User Profile
+GET {{baseUrl}}/user/profile/{{aliId}}
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get Friends
+GET {{baseUrl}}/user/friends/{{aliId}}
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Send Friend Request
+POST {{baseUrl}}/user/send-friend-request/{{aliId}}
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get Friend Requests (Incoming)
+GET {{baseUrl}}/user/get-friends-request
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Accept Friend Request
+POST {{baseUrl}}/user/accept-friend-request/692f98f3c2b3ae21d828f5d4
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get Outgoing Friend Requests
+GET {{baseUrl}}/user/get-outgoing-friend-requests
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+### Get All Friend Requests
+GET {{baseUrl}}/user/get-all-friend-requests
+Content-Type: application/json
+# Cookie: token={{authToken}}
+
+
+### ------------------- CHAT ROUTES -------------------
+
+### Get Stream Token
+GET {{baseUrl}}/chat/token
+Content-Type: application/json
+# Cookie: token={{authToken}}
