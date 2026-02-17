@@ -109,7 +109,13 @@ This backend server powers a full-featured video calling and social networking a
 
 5. The server will run on `http://localhost:3000`
 
+
 ## 📡 API Endpoints
+
+### 📚 API Documentation (Swagger)
+The API documentation is available via Swagger UI.
+- **Local:** [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- **Production:** [https://chatapp-api-ecru.vercel.app/api-docs](https://chatapp-api-ecru.vercel.app/api-docs)
 
 ### Authentication Routes (`/`)
 
@@ -171,6 +177,7 @@ backend/
 ├── .env                             # Environment variables
 ├── .gitignore                       # Git ignore rules
 ├── app.js                           # Main application entry
+├── swagger.js                       # Swagger JS Doc Configuration
 ├── package.json                     # Dependencies and scripts
 ├── tests.http                       # API testing file
 └── README.md                        # This file

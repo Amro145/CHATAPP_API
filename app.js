@@ -7,6 +7,8 @@ import cors from "cors";
 import userRoutes from "./src/routes/user.route.js";
 import chatRoutes from "./src/routes/chat.route.js";
 import authRoutes from "./src/routes/auth.route.js";
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger.js';
 
 dotenv.config();
 
@@ -18,6 +20,7 @@ const allowedOrigins = [
     'http://localhost:5173',
     'http://localhost:3000',
     process.env.CLIENT_URL,
+    'https://chatapp-api-ecru.vercel.app',
 ].filter(Boolean);
 
 app.use(cors({
@@ -38,6 +41,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(morgan('dev'));
+
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use("/", authRoutes);
@@ -65,6 +71,7 @@ if (process.env.NODE_ENV !== 'production' && import.meta.url === `file://${proce
         .then(() => {
             app.listen(PORT, () => {
                 console.log(`Server is running on port ${PORT}`);
+                console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
             });
         })
         .catch((error) => {
