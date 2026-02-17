@@ -44,7 +44,14 @@ app.use(morgan('dev'));
 
 // Swagger Documentation
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.min.css";
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customCssUrl: CSS_URL }));
+app.use('/api-docs', (req, res, next) => {
+    // Ensure trailing slash for proper asset loading
+    if (req.originalUrl === '/api-docs' || (req.originalUrl.includes('?') && req.originalUrl.split('?')[0] === '/api-docs')) {
+        const query = req.originalUrl.includes('?') ? '?' + req.originalUrl.split('?')[1] : '';
+        return res.redirect('/api-docs/' + query);
+    }
+    next();
+}, swaggerUi.serve, swaggerUi.setup(swaggerSpec, { customCssUrl: CSS_URL }));
 
 // Routes
 app.use("/", authRoutes);
@@ -72,7 +79,7 @@ if (process.env.NODE_ENV !== 'production' && import.meta.url === `file://${proce
         .then(() => {
             app.listen(PORT, () => {
                 console.log(`Server is running on port ${PORT}`);
-                console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs`);
+                console.log(`Swagger Docs available at http://localhost:${PORT}/api-docs/`);
             });
         })
         .catch((error) => {
