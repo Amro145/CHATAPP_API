@@ -1,7 +1,5 @@
-@baseUrl = https://chatapp-api-ecru.vercel.app/
-@authToken = your_auth_token_here
-@amroId = 692f96cfc2b3ae21d828f59d
-@aliId = 692f96fec2b3ae21d828f5a3
+# @baseUrl = http://localhost:3000
+@baseUrl = https://chatapp-api-ecru.vercel.app
 
 ### ------------------- SYSTEM ROUTES -------------------
 
@@ -11,43 +9,43 @@ Content-Type: application/json
 
 ### ------------------- AUTH ROUTES -------------------
 
-### Signup
+# @name signup
 POST {{baseUrl}}/signup
 Content-Type: application/json
 
 {
-    "email": "abas@gmail.com",
-    "name": "Abas",
-    "password": "password123"
+    "email": "amroaltayeb14@gmail.com",
+    "name": "Amro Altyeb",
+    "password": "amro123"
 }
 
 ### Verify Email
+# Note: You need the token from the email (or database/console if logging)
 POST {{baseUrl}}/verify-email
 Content-Type: application/json
 
 {
-    "verificationToken": "17009346"
+    "verificationToken": "12345678"
 }
 
-### Signin
+# @name login
 POST {{baseUrl}}/signin
 Content-Type: application/json
 
 {
-    "email": "abas@gmail.com",
-    "password": "password123"
+    "email": "amroaltayeb14@gmail.com",
+    "password": "amro123"
 }
+
+### Check Auth (Verify if logged in)
+GET {{baseUrl}}/check-auth
+Content-Type: application/json
 
 ### Logout
 POST {{baseUrl}}/logout
 Content-Type: application/json
 
-### Check Auth
-GET {{baseUrl}}/check-auth
-Content-Type: application/json
-# Cookie: token={{authToken}}
-
-### Get All Users
+### Get All Users (Admin)
 GET {{baseUrl}}/getall
 Content-Type: application/json
 
@@ -56,30 +54,30 @@ POST {{baseUrl}}/forgot-password
 Content-Type: application/json
 
 {
-    "email": "ali@gmail.com"
+    "email": "amroaltayeb14@gmail.com"
 }
 
-### Reset Password (Manual Token Required)
-POST {{baseUrl}}/reset-password/5f01dc866e207ac65b98c6f2811a927dd44117d4f333c65990dfa97f44314ef8
+### Reset Password
+# Replace :resetCode with the token received in email
+POST {{baseUrl}}/reset-password/your_reset_token_here
 Content-Type: application/json
 
 {
-    "password": "password123"
+    "password": "newpassword123"
 }
 
-### Onboarding
+### Onboarding (Complete Profile)
 POST {{baseUrl}}/onboarding
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 {
-    "profilePic": "https://avatar.iran.liara.run/public/1.png",
-    "bio": "Hello world",
-    "location": "Earth",
+    "profilePic": "https://avatar.iran.liara.run/public/1",
+    "bio": "I love coding and video calls!",
+    "location": "San Francisco",
     "gender": "male"
 }
 
-### Delete User (Manual ID Required)
+### Delete User
 DELETE {{baseUrl}}/delete/user_id_here
 Content-Type: application/json
 
@@ -89,42 +87,35 @@ Content-Type: application/json
 ### Get Suggested Friends
 GET {{baseUrl}}/user/suggested
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 ### Get User Profile
-GET {{baseUrl}}/user/profile/{{aliId}}
+GET {{baseUrl}}/user/profile/user_id_here
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
-### Get Friends
-GET {{baseUrl}}/user/friends/{{aliId}}
+### Get Friends List
+GET {{baseUrl}}/user/friends/user_id_here
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 ### Send Friend Request
-POST {{baseUrl}}/user/send-friend-request/{{aliId}}
+POST {{baseUrl}}/user/send-friend-request/receiver_id_here
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
-### Get Friend Requests (Incoming)
+### Get Incoming Friend Requests
 GET {{baseUrl}}/user/get-friends-request
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 ### Accept Friend Request
-POST {{baseUrl}}/user/accept-friend-request/692f98f3c2b3ae21d828f5d4
+# Replace :id with the Friend Request ID (not User ID)
+POST {{baseUrl}}/user/accept-friend-request/request_id_here
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 ### Get Outgoing Friend Requests
 GET {{baseUrl}}/user/get-outgoing-friend-requests
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
-### Get All Friend Requests
+### Get All Friend Requests (Admin)
 GET {{baseUrl}}/user/get-all-friend-requests
 Content-Type: application/json
-# Cookie: token={{authToken}}
 
 
 ### ------------------- CHAT ROUTES -------------------
@@ -132,4 +123,3 @@ Content-Type: application/json
 ### Get Stream Token
 GET {{baseUrl}}/chat/token
 Content-Type: application/json
-# Cookie: token={{authToken}}
