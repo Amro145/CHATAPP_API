@@ -5,12 +5,12 @@ dotenv.config();
 
 const TOKEN = process.env.MAILTRAP_TOKEN;
 if (!TOKEN) {
-    throw new Error("MAILTRAP_API_TOKEN is not defined in .env file");
+    console.warn("MAILTRAP_API_TOKEN is not defined in .env file. Email features will not work.");
 }
 
-export const client = new MailtrapClient({
+export const client = TOKEN ? new MailtrapClient({
     token: TOKEN,
-});
+}) : null;
 
 export const sender = {
     email: "hello@demomailtrap.co",

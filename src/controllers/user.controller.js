@@ -84,7 +84,7 @@ export const sendFriendRequest = async (req, res) => {
         }
 
         // Check if the friend request already exists
-        if (user.friends.includes(friendId)) {
+        if (user.friends.some(id => id.toString() === friendId)) {
             return res.status(400).json({ message: "you can't send friend request to Your friend" });
         }
         if (friend.isVerified === false) {
@@ -173,8 +173,12 @@ export const acceptFriendRequest = async (req, res) => {
         if (!user || !friend) {
             return res.status(404).json({ message: 'User or Friend not found' });
         }
-        user.friends.push(friend._id);
-        friend.friends.push(user._id);
+        if (!user.friends.includes(friend._id)) {
+            user.friends.push(friend._id);
+        }
+        if (!friend.friends.includes(user._id)) {
+            friend.friends.push(user._id);
+        }
         await user.save();
         await friend.save();
         const userFriends = user.friends;

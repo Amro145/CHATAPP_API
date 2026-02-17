@@ -2,6 +2,10 @@ import { client, sender } from "./mailtrap.js";
 import { PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, VERIFICATION_EMAIL_TEMPLATE } from "./mailtrap.template.js";
 
 export const verificationEmail = async (email, code, name) => {
+    if (!client) {
+        console.warn("Mailtrap client not initialized. Skipping verification email.");
+        return;
+    }
     const recipients = [{ email }]
     try {
         const response = await client
@@ -19,6 +23,10 @@ export const verificationEmail = async (email, code, name) => {
     }
 }
 export const sendWelcomeEmail = async (email, name) => {
+    if (!client) {
+        console.warn("Mailtrap client not initialized. Skipping welcome email.");
+        return;
+    }
     const recipients = [{ email }]
 
     try {
@@ -35,6 +43,10 @@ export const sendWelcomeEmail = async (email, name) => {
     }
 }
 export const sendResetPasswordEmail = async (email, code, name) => {
+    if (!client) {
+        console.warn("Mailtrap client not initialized. Skipping password reset email.");
+        return;
+    }
     const recipients = [{ email }]
     try {
         const response = await client.send({
@@ -50,6 +62,10 @@ export const sendResetPasswordEmail = async (email, code, name) => {
     }
 }
 export const sendResetPasswordEmailSuccess = async (email, code, name) => {
+    if (!client) {
+        console.warn("Mailtrap client not initialized. Skipping password reset success email.");
+        return;
+    }
     const recipients = [{ email }]
     try {
         const response = await client.send({

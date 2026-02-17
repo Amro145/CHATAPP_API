@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/auth.model.js";
 import { generateTokenAndSetCookie } from "../../lib/generateTokenAndSetCookie.js";
+import { sendResetPasswordEmail, sendResetPasswordEmailSuccess, sendWelcomeEmail, verificationEmail } from "../../mailtrap/email.js";
 import crypto from "crypto";
 import { upsertStreamUser } from "../../lib/stream.js";
 
@@ -57,6 +58,7 @@ export const signUp = async (req, res) => {
         }
 
         generateTokenAndSetCookie(res, user._id);
+        await verificationEmail(email, verificationToken, name);
         return res.status(201).json({
             message: 'User created successfully!',
             user: formatUserResponse(user),
@@ -86,6 +88,7 @@ export const verifyEmail = async (req, res) => {
         user.verificationTokenExpires = undefined;
         await user.save();
 
+        await sendWelcomeEmail(user.email, user.name);
         return res.status(200).json({
             message: 'Email verified successfully!',
             user: formatUserResponse(user),
@@ -171,9 +174,11 @@ export const forgotPassword = async (req, res) => {
         user.resetPasswordToken = resetToken;
         user.resetPasswordExpires = Date.now() + 1 * 60 * 60 * 1000;
         await user.save();
+        // Send the reset token to the user's email
+        await sendResetPasswordEmail(email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`, user.name);
 
         return res.status(200).json({
-            message: 'Reset token generated!',
+            message: 'Reset token sent to your email!',
             resetToken, // In production, this should only be sent via email
         });
     } catch (error) {
@@ -202,6 +207,7 @@ export const resetPassword = async (req, res) => {
         user.resetPasswordExpires = undefined;
         await user.save();
 
+        await sendResetPasswordEmailSuccess(user.email, `${process.env.CLIENT_URL}/login`, user.name);
         return res.status(200).json({ message: 'Password reset successfully!' });
     } catch (error) {
         return res.status(500).json({ message: 'Error in resetPassword', error: error.message });
