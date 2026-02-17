@@ -1,5 +1,5 @@
 import User from "../models/auth.model.js";
-import { FriendRequest } from "../models/friendRequest.mode.js";
+import { FriendRequest } from "../models/friendRequest.model.js";
 
 export const getFriends = async (req, res) => {
     try {
@@ -178,8 +178,8 @@ export const acceptFriendRequest = async (req, res) => {
         await user.save();
         await friend.save();
         const userFriends = user.friends;
-        const mydata = await User.findById(myId)
-        return res.status(200).json(mydata);
+        const myData = await User.findById(myId).select("-password").populate("friends", "name email bio profilePic");
+        return res.status(200).json(myData);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: 'Server error', error: error.message });

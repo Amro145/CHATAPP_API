@@ -156,7 +156,7 @@ backend/
 │   │   └── chat.controller.js      # Stream Chat integration
 │   ├── models/
 │   │   ├── auth.model.js           # User schema and model
-│   │   └── friendRequest.mode.js   # Friend request schema
+│   │   └── friendRequest.model.js  # Friend request schema
 │   └── routes/
 │       ├── auth.route.js           # Authentication routes
 │       ├── user.route.js           # User routes
@@ -165,7 +165,7 @@ backend/
 │   ├── connectToDb.js              # MongoDB connection
 │   ├── generateTokenAndSetCookie.js # JWT token generation
 │   └── stream.js                   # Stream Chat utilities
-├── middleWare/
+├── middleware/
 │   └── verifyToken.js              # JWT verification middleware
 ├── mailtrap/                        # Email templates (optional)
 ├── .env                             # Environment variables

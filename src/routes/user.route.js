@@ -1,6 +1,6 @@
 import express from 'express';
 import { acceptFriendRequest, getAllFriendRequests, getFriendRequests, getFriends, getOutgoingFriendRequests, getUser, sendFriendRequest, suggestedFriends } from '../controllers/user.controller.js';
-import { verifyToken } from '../../middleWare/verifyToken.js';
+import { verifyToken } from '../../middleware/verifyToken.js';
 const router = express.Router();
 
 router.get('/friends/:id', verifyToken, getFriends);

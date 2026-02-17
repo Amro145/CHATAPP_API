@@ -1,7 +1,13 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.token
+    let token = req.cookies.token;
+
+    // Also check for Authorization header (Bearer token)
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+
     try {
         if (!token) {
             return res.status(401).json({
@@ -9,6 +15,7 @@ export const verifyToken = (req, res, next) => {
                 user: null,
             });
         }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.userId = decoded.userId;
 
